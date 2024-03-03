@@ -7,6 +7,8 @@ package org.unicode.cldr.util;
  * @author srl
  */
 public abstract class CLDRURLS {
+    public static final String CLDR_SCHEMA_BASE = "https://schemas.unicode.org/cldr";
+    public static final String CLDR_CURVER_BASE = CLDR_SCHEMA_BASE + "/" + CLDRFile.GEN_VERSION;
     /** Base URL for the CLDR repository */
     public static final String CLDR_REPO_BASE = "https://github.com/unicode-org/cldr";
 
@@ -25,7 +27,7 @@ public abstract class CLDRURLS {
     public static final String UNICODE_CONSORTIUM = "The Unicode Consortium";
     public static final String CLDR_UPDATINGDTD_URL = CLDR_HOMEPAGE + "/development/updating-dtds";
     /** Our license, in SPDX format */
-    public static final String UNICODE_SPDX = "Unicode-DFS-2016";
+    public static final String UNICODE_SPDX = "Unicode-3.0";
     /**
      * See:
      * https://spdx.github.io/spdx-spec/appendix-V-using-SPDX-short-identifiers-in-source-files/

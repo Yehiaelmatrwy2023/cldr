@@ -55,6 +55,15 @@ public class XMLFileReader {
     private SimpleHandler simpleHandler;
 
     public static class SimpleHandler {
+        /**
+         * called when every new element is encountered, with the full path to the element
+         * (including attributes). Called on leaf and non-leaf elements.
+         *
+         * @param path
+         */
+        public void handleElement(CharSequence path) {}
+
+        /** Called with an "xpath" of each leaf element */
         public void handlePathValue(String path, String value) {}
 
         public void handleComment(String path, String comment) {}
@@ -173,6 +182,8 @@ public class XMLFileReader {
             AllHandler allHandler) {
         try {
             XMLReader xmlReader = createXMLReader(handlers, validating, allHandler);
+            // wrap the reader to insert a character stream
+            DoctypeXmlStreamWrapper.wrap(is);
             is.setSystemId(systemID);
             try {
                 xmlReader.parse(is);
@@ -189,7 +200,7 @@ public class XMLFileReader {
         }
     }
 
-    private static final XMLReader createXMLReader(
+    public static final XMLReader createXMLReader(
             int handlers, boolean validating, AllHandler allHandler)
             throws SAXNotRecognizedException, SAXNotSupportedException {
         XMLReader xmlReader = createXMLReader(validating);
@@ -416,6 +427,7 @@ public class XMLFileReader {
             startElements.push(tempPath.toString());
             chars.setLength(0); // clear garbage
             lastIsStart = true;
+            simpleHandler.handleElement(tempPath);
         }
 
         @Override
